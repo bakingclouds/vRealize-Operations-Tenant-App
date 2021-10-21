@@ -1,0 +1,4783 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Tenant App API Documentation",
+        "version": "8.6",
+        "title": "Tenant App API Documentation",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Acquring vROPs Token"
+        },
+        {
+            "name": "Pricing Setting",
+            "description": "Pricing Setting"
+        },
+        {
+            "name": "Pricing Policy Management",
+            "description": "Pricing Policy Management"
+        },
+        {
+            "name": "Associate policy with OVDC",
+            "description": "Associate policy with OVDC"
+        },
+        {
+            "name": "Bill Management",
+            "description": "Bill Management"
+        },
+        {
+            "name": "Report Management",
+            "description": "Report Management"
+        },
+        {
+            "name": "Metric Management",
+            "description": "Metric Management"
+        },
+        {
+            "name": "User Management",
+            "description": "User Management"
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/suite-api/api/auth/token/acquire": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "acquire vROPs Token",
+                "operationId": "getvROPsToken",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "body",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "body",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/AuthToken"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/deployment/config/globalsettings/PROPAGATE_STORAGE_PROFILE_PRICE/{value}": {
+            "put": {
+                "tags": [
+                    "Pricing Setting"
+                ],
+                "summary": "set pricing setting",
+                "operationId": "setPricingSettingUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "value",
+                        "in": "path",
+                        "description": "value",
+                        "required": true,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/deployment/config/globalsettings/PROPAGATE_STORAGE_PROFILE_PRICE": {
+            "get": {
+                "tags": [
+                    "Pricing Setting"
+                ],
+                "summary": "get pricing setting",
+                "operationId": "getPricingSettingUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/PricingSetting"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/pricingpolicy": {
+            "post": {
+                "tags": [
+                    "Pricing Policy Management"
+                ],
+                "summary": "create pricing policy",
+                "operationId": "createPricingPolicyUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "policy",
+                        "description": "policy",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MeteringPolicy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/MeteringPolicy"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/pricingpolicy/{id}": {
+            "get": {
+                "tags": [
+                    "Pricing Policy Management"
+                ],
+                "summary": "get pricing policy",
+                "operationId": "getPricingPolicyUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/MeteringPolicy"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "Pricing Policy Management"
+                ],
+                "summary": "update pricing policy",
+                "operationId": "updatePricingPolicyUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "in": "body",
+                        "name": "policy",
+                        "description": "policy",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MeteringPolicy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/MeteringPolicy"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Pricing Policy Management"
+                ],
+                "summary": "delete pricing policy",
+                "operationId": "deletePricingPolicyUsingDELETE",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/internal/metering": {
+            "get": {
+                "tags": [
+                    "Pricing Policy Management"
+                ],
+                "summary": "get pricing policies list",
+                "operationId": "getPricingPoliciesUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MeteringPolicy"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/resources/{id}/properties": {
+            "post": {
+                "tags": [
+                    "Associate policy with OVDC"
+                ],
+                "summary": "add properties to policy",
+                "operationId": "addPropertiesUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "resource id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "in": "body",
+                        "name": "property-content",
+                        "description": "property content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PropertyContents"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/bills": {
+            "post": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "create bill",
+                "operationId": "createBillUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "billsRequest",
+                        "description": "billsRequest",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/BillsRequestDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/BillDto"
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/bills/query": {
+            "post": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "query bills",
+                "operationId": "queryBillsUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "billQuery",
+                        "description": "billQuery",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/BillQueryDto"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "pageSize",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1000,
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/BillsDto"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/bills/{id}": {
+            "get": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "get bill",
+                "operationId": "getBillUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/BillDto"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "delete bill",
+                "operationId": "deleteBillUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/bills/schedule": {
+            "post": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "schedule bill",
+                "operationId": "scheduleBillUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "scheduleBillsRequest",
+                        "description": "scheduleBillsRequest",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ScheduleBillsRequestDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "get": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "get bill schedules",
+                "operationId": "getBillSchedulesUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/BillSchedule"
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/reports": {
+            "post": {
+                "tags": [
+                    "Report Management"
+                ],
+                "summary": "create report",
+                "operationId": "createReportUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "report",
+                        "description": "report",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Report"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Report"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "get": {
+                "tags": [
+                    "Report Management"
+                ],
+                "summary": "get reports",
+                "operationId": "getReportsUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "vcd",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Reports"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/reports/{id}/download": {
+            "get": {
+                "tags": [
+                    "Report Management"
+                ],
+                "summary": "Download report",
+                "operationId": "downloadReportUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "report id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "format",
+                        "in": "path",
+                        "description": "format",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/reports/{id}": {
+            "get": {
+                "tags": [
+                    "Report Management"
+                ],
+                "summary": "get report",
+                "operationId": "getReportUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Report"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Report Management"
+                ],
+                "summary": "delete report",
+                "operationId": "deleteReportUsingDELETE",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "report id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/resources/query": {
+            "post": {
+                "tags": [
+                    "Metric Management"
+                ],
+                "summary": "get resource list",
+                "operationId": "getResourceListUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "query",
+                        "in": "body",
+                        "description": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ResourceQuery"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Resources"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/resources/{id}/statkeys": {
+            "get": {
+                "tags": [
+                    "Metric Management"
+                ],
+                "summary": "get metrics list",
+                "operationId": "getMetricsListGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "resource id",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/StatKeys"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/resources/stats/query": {
+            "post": {
+                "tags": [
+                    "Metric Management"
+                ],
+                "summary": "get metric value",
+                "operationId": "getMetricValueUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "query",
+                        "in": "body",
+                        "description": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/StatQuery"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/StatsOfResources"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/suite-api/api/resources/stats": {
+            "get": {
+                "tags": [
+                    "Metric Management"
+                ],
+                "summary": "get metric as csv",
+                "operationId": "getMetricsCSVUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "text/csv"
+                    },
+                    {
+                        "name": "begin",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "end",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "metrics",
+                        "in": "query",
+                        "required": true,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "resourceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "statKey",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/StatsOfResources"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/access/pricesetting/PRICE_VALUE_TENANT/{value}": {
+            "post": {
+                "tags": [
+                    "Metric Management"
+                ],
+                "summary": "show/hide price value to tenant",
+                "operationId": "setPriceValueUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "value",
+                        "in": "path",
+                        "description": "true/false",
+                        "required": true,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/PriceSetting"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/access/pricesetting/PRICE_VALUE_TENANT": {
+            "get": {
+                "tags": [
+                    "Metric Management"
+                ],
+                "summary": "get price value of tenant",
+                "operationId": "getPriceValueUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/PriceSetting"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/users": {
+            "get": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "getAllUsers",
+                "operationId": "getAllUsersUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "post": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "createUser",
+                "operationId": "createUserUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "user",
+                        "description": "user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tenant-app-api/users/{username}": {
+            "get": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "getUser",
+                "operationId": "getUserUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "username",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "deleteUser",
+                "operationId": "deleteUserUsingDELETE",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "username",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "definitions": {
+        "AuthToken": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "validity": {
+                    "type": "number",
+                    "format": "long"
+                },
+                "expiresAt": {
+                    "type": "string"
+                },
+                "roles": {
+                    "$ref": "#/definitions/ArrayOfStrings"
+                }
+            }
+        },
+        "ArrayOfBooleans": {
+            "type": "array",
+            "items": {
+                "type": "boolean"
+            }
+        },
+        "ArrayOfStrings": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "ArrayOfInts": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            }
+        },
+        "Badge": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "string"
+                },
+                "score": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Badges": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Badge"
+            }
+        },
+        "BillSchedule": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "resourceId": {
+                    "type": "string"
+                },
+                "policyId": {
+                    "type": "string"
+                },
+                "startDay": {
+                    "type": "integer"
+                },
+                "endDay": {
+                    "type": "integer"
+                },
+                "runDay": {
+                    "type": "integer"
+                },
+                "recurrence": {
+                    "type": "string"
+                },
+                "start": {
+                    "type": "string"
+                },
+                "end": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "calculateStorageOnVm": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "BillDto": {
+            "type": "object",
+            "properties": {
+                "endTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "metering": {
+                    "$ref": "#/definitions/ResourceMeteringDto"
+                },
+                "policy": {
+                    "$ref": "#/definitions/MeteringPolicy"
+                },
+                "policyId": {
+                    "type": "string"
+                },
+                "resourceId": {
+                    "type": "string"
+                },
+                "resources": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/ResourceKey"
+                    }
+                },
+                "startTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "timestamp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "title": "BillDto"
+        },
+        "BillQueryDto": {
+            "type": "object",
+            "properties": {
+                "adapterKind": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "filterBy": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BillQueryFilterByDto"
+                    }
+                },
+                "id": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "policyId": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "resourceId": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "resourceKind": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "sortBy": {
+                    "$ref": "#/definitions/BillQuerySortByDto"
+                }
+            },
+            "title": "BillQueryDto"
+        },
+        "BillQueryFilterByDto": {
+            "type": "object",
+            "properties": {
+                "by": {
+                    "type": "string",
+                    "enum": [
+                        "title",
+                        "resourceName"
+                    ]
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "title": "BillQueryFilterByDto"
+        },
+        "BillQuerySortByDto": {
+            "type": "object",
+            "properties": {
+                "by": {
+                    "type": "string",
+                    "enum": [
+                        "title",
+                        "resourceName",
+                        "billingDate",
+                        "startTime",
+                        "endTime",
+                        "totalCost"
+                    ]
+                },
+                "reverse": {
+                    "type": "boolean"
+                }
+            },
+            "title": "BillQuerySortByDto"
+        },
+        "BillsDto": {
+            "type": "object",
+            "properties": {
+                "bills": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BillDto"
+                    }
+                },
+                "pageInfo": {
+                    "$ref": "#/definitions/PageInfo"
+                }
+            },
+            "title": "BillsDto"
+        },
+        "BillsRequestDto": {
+            "type": "object",
+            "properties": {
+                "endTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "policyId": {
+                    "type": "string"
+                },
+                "resourceIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "startTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "title": "BillsRequestDto"
+        },
+        "ScheduleBillsRequestDto": {
+            "type": "object",
+            "properties": {
+                "policyId": {
+                    "type": "string"
+                },
+                "start": {
+                    "type": "string"
+                },
+                "end": {
+                    "type": "string"
+                },
+                "startDay": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "endDay": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "runDay": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "resourceIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "calculateStorageOnVm": {
+                    "type": "boolean"
+                }
+            },
+            "title": "ScheduleBillsRequestDto"
+        },
+        "Bind": {
+            "type": "object",
+            "properties": {
+                "accessMode": {
+                    "type": "string",
+                    "enum": [
+                        "rw",
+                        "ro"
+                    ]
+                },
+                "noCopy": {
+                    "type": "boolean"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "propagationMode": {
+                    "type": "string",
+                    "enum": [
+                        "",
+                        "shared",
+                        "slave",
+                        "private"
+                    ]
+                },
+                "secMode": {
+                    "type": "string",
+                    "enum": [
+                        "",
+                        "z",
+                        "Z"
+                    ]
+                },
+                "volume": {
+                    "$ref": "#/definitions/Volume"
+                }
+            },
+            "title": "Bind"
+        },
+        "BindOptions": {
+            "type": "object",
+            "properties": {
+                "Propagation": {
+                    "type": "string",
+                    "enum": [
+                        "R_PRIVATE",
+                        "PRIVATE",
+                        "R_SHARED",
+                        "SHARED",
+                        "R_SLAVE",
+                        "SLAVE"
+                    ]
+                }
+            },
+            "title": "BindOptions"
+        },
+        "Binding": {
+            "type": "object",
+            "properties": {
+                "hostIp": {
+                    "type": "string"
+                },
+                "hostPortSpec": {
+                    "type": "string"
+                }
+            },
+            "title": "Binding"
+        },
+        "Binds": {
+            "type": "object",
+            "properties": {
+                "binds": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Bind"
+                    }
+                }
+            },
+            "title": "Binds"
+        },
+        "BlkioRateDevice": {
+            "type": "object",
+            "properties": {
+                "Path": {
+                    "type": "string"
+                },
+                "Rate": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "BlkioRateDevice"
+        },
+        "BlkioWeightDevice": {
+            "type": "object",
+            "properties": {
+                "Path": {
+                    "type": "string"
+                },
+                "Weight": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "title": "BlkioWeightDevice"
+        },
+        "ContainerConfig": {
+            "type": "object",
+            "properties": {
+                "AttachStderr": {
+                    "type": "boolean"
+                },
+                "AttachStdin": {
+                    "type": "boolean"
+                },
+                "AttachStdout": {
+                    "type": "boolean"
+                },
+                "Cmd": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Domainname": {
+                    "type": "string"
+                },
+                "Entrypoint": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Env": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ExposedPorts": {
+                    "$ref": "#/definitions/ExposedPorts"
+                },
+                "Healthcheck": {
+                    "$ref": "#/definitions/HealthCheck"
+                },
+                "Hostname": {
+                    "type": "string"
+                },
+                "Image": {
+                    "type": "string"
+                },
+                "Labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "MacAddress": {
+                    "type": "string"
+                },
+                "NetworkDisabled": {
+                    "type": "boolean"
+                },
+                "OnBuild": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "OpenStdin": {
+                    "type": "boolean"
+                },
+                "PortSpecs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "StdinOnce": {
+                    "type": "boolean"
+                },
+                "Tty": {
+                    "type": "boolean"
+                },
+                "User": {
+                    "type": "string"
+                },
+                "Volumes": {
+                    "type": "object"
+                },
+                "WorkingDir": {
+                    "type": "string"
+                },
+                "healthcheck": {
+                    "$ref": "#/definitions/HealthCheck"
+                }
+            },
+            "title": "ContainerConfig"
+        },
+        "ContainerDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "imageId": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            },
+            "title": "ContainerDto"
+        },
+        "ContainerNetwork": {
+            "type": "object",
+            "properties": {
+                "Aliases": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "EndpointID": {
+                    "type": "string"
+                },
+                "Gateway": {
+                    "type": "string"
+                },
+                "GlobalIPv6Address": {
+                    "type": "string"
+                },
+                "GlobalIPv6PrefixLen": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "IPAMConfig": {
+                    "$ref": "#/definitions/Ipam"
+                },
+                "IPAddress": {
+                    "type": "string"
+                },
+                "IPPrefixLen": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "IPv6Gateway": {
+                    "type": "string"
+                },
+                "Links": {
+                    "$ref": "#/definitions/Links"
+                },
+                "MacAddress": {
+                    "type": "string"
+                },
+                "NetworkID": {
+                    "type": "string"
+                }
+            },
+            "title": "ContainerNetwork"
+        },
+        "ContainerState": {
+            "type": "object",
+            "properties": {
+                "Dead": {
+                    "type": "boolean"
+                },
+                "Error": {
+                    "type": "string"
+                },
+                "ExitCode": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "FinishedAt": {
+                    "type": "string"
+                },
+                "Health": {
+                    "$ref": "#/definitions/HealthState"
+                },
+                "OOMKilled": {
+                    "type": "boolean"
+                },
+                "Paused": {
+                    "type": "boolean"
+                },
+                "Pid": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "Restarting": {
+                    "type": "boolean"
+                },
+                "Running": {
+                    "type": "boolean"
+                },
+                "StartedAt": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "oomkilled": {
+                    "type": "boolean"
+                }
+            },
+            "title": "ContainerState"
+        },
+        "Device": {
+            "type": "object",
+            "properties": {
+                "CgroupPermissions": {
+                    "type": "string"
+                },
+                "PathInContainer": {
+                    "type": "string"
+                },
+                "PathOnHost": {
+                    "type": "string"
+                }
+            },
+            "title": "Device"
+        },
+        "Driver": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "Options": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "title": "Driver"
+        },
+        "ExposedPort": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "protocol": {
+                    "type": "string",
+                    "enum": [
+                        "tcp",
+                        "udp"
+                    ]
+                },
+                "scheme": {
+                    "type": "string"
+                }
+            },
+            "title": "ExposedPort"
+        },
+        "ExposedPorts": {
+            "type": "object",
+            "properties": {
+                "exposedPorts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExposedPort"
+                    }
+                }
+            },
+            "title": "ExposedPorts"
+        },
+        "Extension": {
+            "type": "object",
+            "properties": {
+                "anyObjects": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "title": "Extension"
+        },
+        "File": {
+            "type": "object",
+            "properties": {
+                "absolute": {
+                    "type": "boolean"
+                },
+                "absoluteFile": {
+                    "$ref": "#/definitions/File"
+                },
+                "absolutePath": {
+                    "type": "string"
+                },
+                "canonicalFile": {
+                    "$ref": "#/definitions/File"
+                },
+                "canonicalPath": {
+                    "type": "string"
+                },
+                "directory": {
+                    "type": "boolean"
+                },
+                "file": {
+                    "type": "boolean"
+                },
+                "freeSpace": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "hidden": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parent": {
+                    "type": "string"
+                },
+                "parentFile": {
+                    "$ref": "#/definitions/File"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "totalSpace": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "usableSpace": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "File"
+        },
+        "FileSystemResource": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "file": {
+                    "$ref": "#/definitions/File"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "inputStream": {
+                    "$ref": "#/definitions/InputStream"
+                },
+                "open": {
+                    "type": "boolean"
+                },
+                "outputStream": {
+                    "$ref": "#/definitions/OutputStream"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "readable": {
+                    "type": "boolean"
+                },
+                "uri": {
+                    "$ref": "#/definitions/URI"
+                },
+                "url": {
+                    "$ref": "#/definitions/URL"
+                },
+                "writable": {
+                    "type": "boolean"
+                }
+            },
+            "title": "FileSystemResource"
+        },
+        "FixedPrice": {
+            "type": "object",
+            "properties": {
+                "chargePeriod": {
+                    "type": "string",
+                    "xml": {
+                        "name": "chargePeriod",
+                        "attribute": true,
+                        "wrapped": false
+                    },
+                    "enum": [
+                        "HOURLY",
+                        "DAILY",
+                        "WEEKLY",
+                        "MONTHLY",
+                        "UNKNOWN"
+                    ]
+                },
+                "rate": {
+                    "type": "number",
+                    "format": "double",
+                    "xml": {
+                        "name": "rate",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "FixedPrice"
+        },
+        "GeoLocation": {
+            "type": "object",
+            "properties": {
+                "latitude": {
+                    "type": "integer"
+                },
+                "longitude": {
+                    "type": "integer"
+                }
+            }
+        },
+        "GraphData": {
+            "type": "object",
+            "properties": {
+                "DeviceId": {
+                    "type": "string"
+                },
+                "DeviceName": {
+                    "type": "string"
+                },
+                "DeviceSize": {
+                    "type": "string"
+                },
+                "RootDir": {
+                    "type": "string"
+                },
+                "dir": {
+                    "type": "string"
+                }
+            },
+            "title": "GraphData"
+        },
+        "GraphDriver": {
+            "type": "object",
+            "properties": {
+                "Data": {
+                    "$ref": "#/definitions/GraphData"
+                },
+                "Name": {
+                    "type": "string"
+                }
+            },
+            "title": "GraphDriver"
+        },
+        "HealthCheck": {
+            "type": "object",
+            "properties": {
+                "Interval": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Retries": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "StartPeriod": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Test": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Timeout": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "HealthCheck"
+        },
+        "HealthState": {
+            "type": "object",
+            "properties": {
+                "FailingStreak": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "Log": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/HealthStateLog"
+                    }
+                },
+                "Status": {
+                    "type": "string"
+                }
+            },
+            "title": "HealthState"
+        },
+        "HealthStateLog": {
+            "type": "object",
+            "properties": {
+                "End": {
+                    "type": "string"
+                },
+                "ExitCode": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "Output": {
+                    "type": "string"
+                },
+                "Start": {
+                    "type": "string"
+                }
+            },
+            "title": "HealthStateLog"
+        },
+        "HostConfig": {
+            "type": "object",
+            "properties": {
+                "AutoRemove": {
+                    "type": "boolean"
+                },
+                "Binds": {
+                    "$ref": "#/definitions/Binds"
+                },
+                "BlkioDeviceReadBps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BlkioRateDevice"
+                    }
+                },
+                "BlkioDeviceReadIOps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BlkioRateDevice"
+                    }
+                },
+                "BlkioDeviceWriteBps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BlkioRateDevice"
+                    }
+                },
+                "BlkioDeviceWriteIOps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BlkioRateDevice"
+                    }
+                },
+                "BlkioWeight": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "BlkioWeightDevice": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BlkioWeightDevice"
+                    }
+                },
+                "CapAdd": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "ALL",
+                            "AUDIT_CONTROL",
+                            "AUDIT_WRITE",
+                            "BLOCK_SUSPEND",
+                            "CHOWN",
+                            "DAC_OVERRIDE",
+                            "DAC_READ_SEARCH",
+                            "FOWNER",
+                            "FSETID",
+                            "IPC_LOCK",
+                            "IPC_OWNER",
+                            "KILL",
+                            "LEASE",
+                            "LINUX_IMMUTABLE",
+                            "MAC_ADMIN",
+                            "MAC_OVERRIDE",
+                            "MKNOD",
+                            "NET_ADMIN",
+                            "NET_BIND_SERVICE",
+                            "NET_BROADCAST",
+                            "NET_RAW",
+                            "SETFCAP",
+                            "SETGID",
+                            "SETPCAP",
+                            "SETUID",
+                            "SYS_ADMIN",
+                            "SYS_BOOT",
+                            "SYS_CHROOT",
+                            "SYSLOG",
+                            "SYS_MODULE",
+                            "SYS_NICE",
+                            "SYS_PACCT",
+                            "SYS_PTRACE",
+                            "SYS_RAWIO",
+                            "SYS_RESOURCE",
+                            "SYS_TIME",
+                            "SYS_TTY_CONFIG",
+                            "WAKE_ALARM"
+                        ]
+                    }
+                },
+                "CapDrop": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "ALL",
+                            "AUDIT_CONTROL",
+                            "AUDIT_WRITE",
+                            "BLOCK_SUSPEND",
+                            "CHOWN",
+                            "DAC_OVERRIDE",
+                            "DAC_READ_SEARCH",
+                            "FOWNER",
+                            "FSETID",
+                            "IPC_LOCK",
+                            "IPC_OWNER",
+                            "KILL",
+                            "LEASE",
+                            "LINUX_IMMUTABLE",
+                            "MAC_ADMIN",
+                            "MAC_OVERRIDE",
+                            "MKNOD",
+                            "NET_ADMIN",
+                            "NET_BIND_SERVICE",
+                            "NET_BROADCAST",
+                            "NET_RAW",
+                            "SETFCAP",
+                            "SETGID",
+                            "SETPCAP",
+                            "SETUID",
+                            "SYS_ADMIN",
+                            "SYS_BOOT",
+                            "SYS_CHROOT",
+                            "SYSLOG",
+                            "SYS_MODULE",
+                            "SYS_NICE",
+                            "SYS_PACCT",
+                            "SYS_PTRACE",
+                            "SYS_RAWIO",
+                            "SYS_RESOURCE",
+                            "SYS_TIME",
+                            "SYS_TTY_CONFIG",
+                            "WAKE_ALARM"
+                        ]
+                    }
+                },
+                "Cgroup": {
+                    "type": "string"
+                },
+                "CgroupParent": {
+                    "type": "string"
+                },
+                "ConsoleSize": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "ContainerIDFile": {
+                    "type": "string"
+                },
+                "CpuCount": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "CpuPercent": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "CpuPeriod": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "CpuQuota": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "CpuRealtimePeriod": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "CpuRealtimeRuntime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "CpuShares": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "CpusetCpus": {
+                    "type": "string"
+                },
+                "CpusetMems": {
+                    "type": "string"
+                },
+                "DeviceCgroupRules": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Devices": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Device"
+                    }
+                },
+                "DiskQuota": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Dns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "DnsOptions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "DnsSearch": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ExtraHosts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "GroupAdd": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "IOMaximumBandwidth": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "IOMaximumIOps": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Init": {
+                    "type": "boolean"
+                },
+                "IpcMode": {
+                    "type": "string"
+                },
+                "Isolation": {
+                    "type": "string",
+                    "enum": [
+                        "default",
+                        "process",
+                        "hyperv"
+                    ]
+                },
+                "KernelMemory": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Links": {
+                    "$ref": "#/definitions/Links"
+                },
+                "LogConfig": {
+                    "$ref": "#/definitions/LogConfig"
+                },
+                "LxcConf": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LxcConf"
+                    }
+                },
+                "Memory": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "MemoryReservation": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "MemorySwap": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "MemorySwappiness": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Mounts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Mount"
+                    }
+                },
+                "NanoCPUs": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "NetworkMode": {
+                    "type": "string"
+                },
+                "OomKillDisable": {
+                    "type": "boolean"
+                },
+                "OomScoreAdj": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "PidMode": {
+                    "type": "string"
+                },
+                "PidsLimit": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "PortBindings": {
+                    "$ref": "#/definitions/Ports"
+                },
+                "Privileged": {
+                    "type": "boolean"
+                },
+                "PublishAllPorts": {
+                    "type": "boolean"
+                },
+                "ReadonlyRootfs": {
+                    "type": "boolean"
+                },
+                "RestartPolicy": {
+                    "$ref": "#/definitions/RestartPolicy"
+                },
+                "Runtime": {
+                    "type": "string"
+                },
+                "SecurityOpt": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ShmSize": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "StorageOpt": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "Sysctls": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "Tmpfs": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "UTSMode": {
+                    "type": "string"
+                },
+                "Ulimits": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Ulimit"
+                    }
+                },
+                "UsernsMode": {
+                    "type": "string"
+                },
+                "VolumeDriver": {
+                    "type": "string"
+                },
+                "VolumesFrom": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/VolumesFrom"
+                    }
+                }
+            },
+            "title": "HostConfig"
+        },
+        "ImageDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                }
+            },
+            "title": "ImageDto"
+        },
+        "InputStream": {
+            "type": "object",
+            "title": "InputStream"
+        },
+        "InspectContainerResponse": {
+            "type": "object",
+            "properties": {
+                "Args": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Config": {
+                    "$ref": "#/definitions/ContainerConfig"
+                },
+                "Created": {
+                    "type": "string"
+                },
+                "Driver": {
+                    "type": "string"
+                },
+                "ExecDriver": {
+                    "type": "string"
+                },
+                "ExecIDs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "GraphDriver": {
+                    "$ref": "#/definitions/GraphDriver"
+                },
+                "HostConfig": {
+                    "$ref": "#/definitions/HostConfig"
+                },
+                "HostnamePath": {
+                    "type": "string"
+                },
+                "HostsPath": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "string"
+                },
+                "Image": {
+                    "type": "string"
+                },
+                "LogPath": {
+                    "type": "string"
+                },
+                "MountLabel": {
+                    "type": "string"
+                },
+                "Mounts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Mount"
+                    }
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "NetworkSettings": {
+                    "$ref": "#/definitions/NetworkSettings"
+                },
+                "Node": {
+                    "$ref": "#/definitions/Node"
+                },
+                "Path": {
+                    "type": "string"
+                },
+                "Platform": {
+                    "type": "string"
+                },
+                "ProcessLabel": {
+                    "type": "string"
+                },
+                "ResolvConfPath": {
+                    "type": "string"
+                },
+                "RestartCount": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "SizeRootFs": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "State": {
+                    "$ref": "#/definitions/ContainerState"
+                },
+                "Volumes": {
+                    "$ref": "#/definitions/VolumeBinds"
+                },
+                "VolumesRW": {
+                    "$ref": "#/definitions/VolumesRW"
+                }
+            },
+            "title": "InspectContainerResponse"
+        },
+        "InspectImageResponse": {
+            "type": "object",
+            "properties": {
+                "Architecture": {
+                    "type": "string"
+                },
+                "Author": {
+                    "type": "string"
+                },
+                "Comment": {
+                    "type": "string"
+                },
+                "Config": {
+                    "$ref": "#/definitions/ContainerConfig"
+                },
+                "Container": {
+                    "type": "string"
+                },
+                "ContainerConfig": {
+                    "$ref": "#/definitions/ContainerConfig"
+                },
+                "Created": {
+                    "type": "string"
+                },
+                "DockerVersion": {
+                    "type": "string"
+                },
+                "GraphDriver": {
+                    "$ref": "#/definitions/GraphDriver"
+                },
+                "Id": {
+                    "type": "string"
+                },
+                "Os": {
+                    "type": "string"
+                },
+                "OsVersion": {
+                    "type": "string"
+                },
+                "Parent": {
+                    "type": "string"
+                },
+                "RepoDigests": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "RepoTags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "RootFS": {
+                    "$ref": "#/definitions/RootFS"
+                },
+                "Size": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "VirtualSize": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "InspectImageResponse"
+        },
+        "IntervalUnit": {
+            "type": "object",
+            "properties": {
+                "intervalType": {
+                    "type": "string"
+                },
+                "quantifier": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Ipam": {
+            "type": "object",
+            "properties": {
+                "IPv4Address": {
+                    "type": "string"
+                },
+                "IPv6Address": {
+                    "type": "string"
+                }
+            },
+            "title": "Ipam"
+        },
+        "LicenseStatusDto": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "title": "LicenseStatusDto"
+        },
+        "Link": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "title": "Link"
+        },
+        "LinkTag": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "xml": {
+                        "name": "description",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "href": {
+                    "type": "string",
+                    "xml": {
+                        "name": "href",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "xml": {
+                        "name": "name",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "rel": {
+                    "type": "string",
+                    "xml": {
+                        "name": "rel",
+                        "attribute": true,
+                        "wrapped": false
+                    },
+                    "enum": [
+                        "NEXT",
+                        "PREVIOUS",
+                        "START",
+                        "END",
+                        "RELATED",
+                        "SELF"
+                    ]
+                }
+            },
+            "title": "LinkTag"
+        },
+        "Links": {
+            "type": "object",
+            "properties": {
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    }
+                }
+            },
+            "title": "Links"
+        },
+        "LogConfig": {
+            "type": "object",
+            "properties": {
+                "Config": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "Type": {
+                    "type": "string",
+                    "enum": [
+                        "none",
+                        "json-file",
+                        "etwlogs",
+                        "syslog",
+                        "journald",
+                        "gelf",
+                        "fluentd",
+                        "awslogs",
+                        "db",
+                        "splunk",
+                        "gcplogs"
+                    ]
+                }
+            },
+            "title": "LogConfig"
+        },
+        "LxcConf": {
+            "type": "object",
+            "properties": {
+                "Key": {
+                    "type": "string"
+                },
+                "Value": {
+                    "type": "string"
+                }
+            },
+            "title": "LxcConf"
+        },
+        "Map«string,string»": {
+            "type": "object",
+            "title": "Map«string,string»",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "Metering": {
+            "type": "object",
+            "properties": {
+                "baseRate": {
+                    "type": "number",
+                    "format": "double",
+                    "xml": {
+                        "name": "baseRate",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "chargeBasedOn": {
+                    "type": "string",
+                    "xml": {
+                        "name": "chargeBasedOn",
+                        "attribute": true,
+                        "wrapped": false
+                    },
+                    "enum": [
+                        "USAGE",
+                        "ALLOCATION",
+                        "RESERVATION",
+                        "MAX_FROM_USAGE_AND_ALLOCATION",
+                        "MAX_FROM_USAGE_AND_RESERVATION",
+                        "UNKNOWN"
+                    ]
+                },
+                "chargeOnPowerState": {
+                    "type": "string",
+                    "xml": {
+                        "name": "chargeOnPowerState",
+                        "attribute": true,
+                        "wrapped": false
+                    },
+                    "enum": [
+                        "ALWAYS",
+                        "ONLY_WHEN_POWERED_ON",
+                        "POWERED_ON_AT_LEAST_ONCE",
+                        "UNKNOWN"
+                    ]
+                },
+                "chargePeriod": {
+                    "type": "string",
+                    "xml": {
+                        "name": "chargePeriod",
+                        "attribute": true,
+                        "wrapped": false
+                    },
+                    "enum": [
+                        "HOURLY",
+                        "DAILY",
+                        "WEEKLY",
+                        "MONTHLY",
+                        "UNKNOWN"
+                    ]
+                },
+                "fixedPrice": {
+                    "type": "number",
+                    "format": "double",
+                    "xml": {
+                        "name": "fixedPrice",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "overage": {
+                    "type": "boolean",
+                    "xml": {
+                        "name": "overage",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "overageRate": {
+                    "type": "number",
+                    "format": "double",
+                    "xml": {
+                        "name": "overageRate",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "unit": {
+                    "type": "string",
+                    "xml": {
+                        "name": "unit",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "Metering"
+        },
+        "MeteringDetailDto": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "MeteringDetailDto"
+        },
+        "MeteringItem": {
+            "type": "object",
+            "properties": {
+                "itemName": {
+                    "type": "string",
+                    "xml": {
+                        "name": "itemName",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "metering": {
+                    "xml": {
+                        "name": "metering",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "$ref": "#/definitions/Metering"
+                }
+            },
+            "title": "MeteringItem"
+        },
+        "MeteringPolicy": {
+            "type": "object",
+            "properties": {
+                "chargeModel": {
+                    "type": "string",
+                    "xml": {
+                        "name": "chargeModel",
+                        "attribute": true,
+                        "wrapped": false
+                    },
+                    "enum": [
+                        "ALLOCATION_POOL",
+                        "RESERVATION_POOL",
+                        "PAY_AS_YOU_GO",
+                        "UNKNOWN"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "xml": {
+                        "name": "description",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "fixedPrice": {
+                    "xml": {
+                        "name": "fixedPrice",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "$ref": "#/definitions/FixedPrice"
+                },
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "xml": {
+                        "name": "id",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "lastUpdateTimestamp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "xml": {
+                        "name": "lastUpdateTimestamp",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkTag"
+                    }
+                },
+                "meterings": {
+                    "type": "array",
+                    "xml": {
+                        "name": "meterings",
+                        "attribute": false,
+                        "wrapped": true
+                    },
+                    "items": {
+                        "$ref": "#/definitions/MeteringItem"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "xml": {
+                        "name": "name",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "namedMeterings": {
+                    "type": "array",
+                    "xml": {
+                        "name": "namedMeterings",
+                        "attribute": false,
+                        "wrapped": true
+                    },
+                    "items": {
+                        "$ref": "#/definitions/NamedMeteringItem"
+                    }
+                },
+                "tagBasedMeterings": {
+                    "type": "array",
+                    "xml": {
+                        "name": "tagBasedMeterings",
+                        "attribute": false,
+                        "wrapped": true
+                    },
+                    "items": {
+                        "$ref": "#/definitions/TagBasedMeteringItem"
+                    }
+                }
+            },
+            "title": "MeteringPolicy"
+        },
+        "Mount": {
+            "type": "object",
+            "properties": {
+                "Destination": {
+                    "$ref": "#/definitions/Volume"
+                },
+                "Driver": {
+                    "type": "string"
+                },
+                "Mode": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "RW": {
+                    "type": "boolean"
+                },
+                "Source": {
+                    "type": "string"
+                }
+            },
+            "title": "Mount"
+        },
+        "NamedMetering": {
+            "type": "object",
+            "properties": {
+                "metering": {
+                    "xml": {
+                        "name": "metering",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "$ref": "#/definitions/Metering"
+                },
+                "name": {
+                    "type": "string",
+                    "xml": {
+                        "name": "name",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "NamedMetering"
+        },
+        "NamedMeteringItem": {
+            "type": "object",
+            "properties": {
+                "itemName": {
+                    "type": "string",
+                    "xml": {
+                        "name": "itemName",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "meterings": {
+                    "type": "array",
+                    "xml": {
+                        "name": "meterings",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "items": {
+                        "$ref": "#/definitions/NamedMetering"
+                    }
+                }
+            },
+            "title": "NamedMeteringItem"
+        },
+        "NetworkSettings": {
+            "type": "object",
+            "properties": {
+                "Bridge": {
+                    "type": "string"
+                },
+                "EndpointID": {
+                    "type": "string"
+                },
+                "Gateway": {
+                    "type": "string"
+                },
+                "GlobalIPv6Address": {
+                    "type": "string"
+                },
+                "GlobalIPv6PrefixLen": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "HairpinMode": {
+                    "type": "boolean"
+                },
+                "IPAddress": {
+                    "type": "string"
+                },
+                "IPPrefixLen": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "IPv6Gateway": {
+                    "type": "string"
+                },
+                "LinkLocalIPv6Address": {
+                    "type": "string"
+                },
+                "LinkLocalIPv6PrefixLen": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "MacAddress": {
+                    "type": "string"
+                },
+                "Networks": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/ContainerNetwork"
+                    }
+                },
+                "PortMapping": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "Ports": {
+                    "$ref": "#/definitions/Ports"
+                },
+                "SandboxID": {
+                    "type": "string"
+                },
+                "SandboxKey": {
+                    "type": "string"
+                },
+                "SecondaryIPAddresses": {
+                    "type": "object"
+                },
+                "SecondaryIPv6Addresses": {
+                    "type": "object"
+                }
+            },
+            "title": "NetworkSettings"
+        },
+        "Node": {
+            "type": "object",
+            "properties": {
+                "Addr": {
+                    "type": "string"
+                },
+                "Cpus": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "ID": {
+                    "type": "string"
+                },
+                "IP": {
+                    "type": "string"
+                },
+                "Labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "Memory": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Name": {
+                    "type": "string"
+                }
+            },
+            "title": "Node"
+        },
+        "OutputStream": {
+            "type": "object",
+            "title": "OutputStream"
+        },
+        "PageAccessDto": {
+            "type": "object",
+            "properties": {
+                "accessEnabled": {
+                    "type": "boolean"
+                },
+                "pageName": {
+                    "type": "string"
+                }
+            },
+            "title": "PageAccessDto"
+        },
+        "PageAccessRequestDto": {
+            "type": "object",
+            "properties": {
+                "accessEnabled": {
+                    "type": "boolean"
+                },
+                "pageName": {
+                    "type": "string"
+                }
+            },
+            "title": "PageAccessRequestDto"
+        },
+        "PageInfo": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "totalCount": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "title": "PageInfo"
+        },
+        "PluginContainerDto": {
+            "type": "object",
+            "properties": {
+                "amqpHost": {
+                    "type": "string"
+                },
+                "amqpPassword": {
+                    "type": "string"
+                },
+                "amqpPort": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "amqpUseSSL": {
+                    "type": "boolean"
+                },
+                "amqpUsername": {
+                    "type": "string"
+                },
+                "amqpVHost": {
+                    "type": "string"
+                },
+                "proxy": {
+                    "type": "string"
+                },
+                "vcdInfo": {
+                    "$ref": "#/definitions/VCloudDirectorEndpoint"
+                }
+            },
+            "title": "PluginContainerDto"
+        },
+        "Ports": {
+            "type": "object",
+            "properties": {
+                "bindings": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/Binding"
+                        }
+                    }
+                }
+            },
+            "title": "Ports"
+        },
+        "PriceSetting": {
+            "type": "object",
+            "properties": {
+                "priceSettingKey": {
+                    "type": "string"
+                },
+                "priceSettingValue": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "PricingSetting": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "values": {
+                    "$ref": "#/definitions/ArrayOfBooleans"
+                }
+            },
+            "example": [
+                {
+                    "key": "PROPAGATE_STORAGE_PROFILE_PRICE",
+                    "values": [
+                        true
+                    ]
+                }
+            ]
+        },
+        "PropertyContent": {
+            "type": "object",
+            "properties": {
+                "statKey": {
+                    "type": "string"
+                },
+                "timestamps": {
+                    "type": "integer"
+                },
+                "values": {
+                    "type": "string"
+                }
+            },
+            "example": [
+                {
+                    "statkey": "metering|MeteringPolicyId",
+                    "timestamps": [
+                        "<currentTimestamp>"
+                    ],
+                    "values": [
+                        "<meteringPolicyId>"
+                    ]
+                },
+                {
+                    "statkey": "metering|metering|MeteringPolicyName",
+                    "timestamps": [
+                        "<currentTimestamp>"
+                    ],
+                    "values": [
+                        "<meteringPolicyName>"
+                    ]
+                }
+            ]
+        },
+        "PropertyContents": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/PropertyContent"
+            }
+        },
+        "Report": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "resourceId": {
+                    "type": "string"
+                },
+                "reportDefinitionId": {
+                    "type": "string"
+                },
+                "traversalSpec": {
+                    "$ref": "#/definitions/TraversalSpec"
+                },
+                "owner": {
+                    "type": "string"
+                },
+                "completionTime": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkTag"
+                    }
+                }
+            },
+            "title": "Report"
+        },
+        "Reports": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Report"
+            }
+        },
+        "Resource": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "file": {
+                    "$ref": "#/definitions/File"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "inputStream": {
+                    "$ref": "#/definitions/InputStream"
+                },
+                "open": {
+                    "type": "boolean"
+                },
+                "readable": {
+                    "type": "boolean"
+                },
+                "uri": {
+                    "$ref": "#/definitions/URI"
+                },
+                "url": {
+                    "$ref": "#/definitions/URL"
+                }
+            },
+            "title": "Resource"
+        },
+        "ResourcevRops": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "creationTime": {
+                    "type": "integer"
+                },
+                "resourceKey": {
+                    "$ref": "#/definitions/ResourceKey"
+                },
+                "credentialInstanceId": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "geoLocation": {
+                    "$ref": "#/definitions/GeoLocation"
+                },
+                "resourceStatusStates": {
+                    "$ref": "#/definitions/ResourceStatusStates"
+                },
+                "resourceHealth": {
+                    "type": "string"
+                },
+                "resourceHealthValue": {
+                    "type": "integer"
+                },
+                "dtEnabled": {
+                    "type": "boolean"
+                },
+                "monitoringInterval": {
+                    "type": "integer"
+                },
+                "badges": {
+                    "$ref": "#/definitions/Badges"
+                },
+                "relatedResources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ResourceIdentifier"
+                    }
+                },
+                "extension": {
+                    "$ref": "#/definitions/Extension"
+                },
+                "links": {
+                    "$ref": "#/definitions/LinkTag"
+                },
+                "identifier": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "Resources": {
+            "type": "object",
+            "properties": {
+                "pageInfo": {
+                    "$ref": "#/definitions/PageInfo"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkTag"
+                    }
+                },
+                "resourceList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ResourcevRops"
+                    }
+                }
+            },
+            "title": "Resources"
+        },
+        "ResourceIdentifier": {
+            "type": "object",
+            "properties": {
+                "identifierType": {
+                    "xml": {
+                        "name": "identifierType",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "$ref": "#/definitions/ResourceIdentifierType"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkTag"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "uniquelyIdentifying": {
+                    "type": "boolean"
+                },
+                "value": {
+                    "type": "string",
+                    "xml": {
+                        "name": "value",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "ResourceIdentifier"
+        },
+        "ResourceIdentifierType": {
+            "type": "object",
+            "properties": {
+                "dataType": {
+                    "type": "string",
+                    "xml": {
+                        "name": "dataType",
+                        "attribute": true,
+                        "wrapped": false
+                    },
+                    "enum": [
+                        "STRING",
+                        "INTEGER",
+                        "HOST",
+                        "IP",
+                        "ENUM",
+                        "PASSWORD",
+                        "BOOLEAN",
+                        "UNKNOWN"
+                    ]
+                },
+                "extension": {
+                    "xml": {
+                        "name": "extension",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "$ref": "#/definitions/Extension"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkTag"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "xml": {
+                        "name": "name",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "partOfUniqueness": {
+                    "type": "boolean",
+                    "xml": {
+                        "name": "isPartOfUniqueness",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "ResourceIdentifierType"
+        },
+        "ResourceKey": {
+            "type": "object",
+            "properties": {
+                "adapterKindKey": {
+                    "type": "string",
+                    "xml": {
+                        "name": "adapterKindKey",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "extension": {
+                    "xml": {
+                        "name": "extension",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "$ref": "#/definitions/Extension"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkTag"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "xml": {
+                        "name": "name",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "resourceIdentifiers": {
+                    "type": "array",
+                    "xml": {
+                        "name": "resourceIdentifiers",
+                        "attribute": false,
+                        "wrapped": true
+                    },
+                    "items": {
+                        "$ref": "#/definitions/ResourceIdentifier"
+                    }
+                },
+                "resourceKindKey": {
+                    "type": "string",
+                    "xml": {
+                        "name": "resourceKindKey",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "ResourceKey"
+        },
+        "ResourceMeteringDto": {
+            "type": "object",
+            "properties": {
+                "meteringDetails": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MeteringDetailDto"
+                    }
+                },
+                "resourceId": {
+                    "type": "string"
+                },
+                "subResourcesMetering": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ResourceMeteringDto"
+                    }
+                },
+                "totalPrice": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "ResourceMeteringDto"
+        },
+        "ResourceSelection": {
+            "type": "object",
+            "properties": {
+                "resourceIds": {
+                    "type": "array",
+                    "xml": {
+                        "name": "resourceId",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "type": {
+                    "type": "string",
+                    "xml": {
+                        "name": "type",
+                        "attribute": true,
+                        "wrapped": false
+                    },
+                    "enum": [
+                        "PROPAGATE",
+                        "UNPROPAGATE",
+                        "SPECIFIC"
+                    ]
+                }
+            },
+            "title": "ResourceSelection"
+        },
+        "ResourceStatusStates": {
+            "type": "object",
+            "properties": {
+                "adapterInstanceId": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "resourceStatus": {
+                    "type": "string"
+                },
+                "resourceState": {
+                    "type": "string"
+                },
+                "statusMessage": {
+                    "type": "string"
+                }
+            }
+        },
+        "ResourceQuery": {
+            "type": "object",
+            "properties": {
+                "adapterKind": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "resourceKind": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "title": "ResourceQuery"
+        },
+        "RestartPolicy": {
+            "type": "object",
+            "properties": {
+                "MaximumRetryCount": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "Name": {
+                    "type": "string"
+                }
+            },
+            "title": "RestartPolicy"
+        },
+        "RolePermission": {
+            "type": "object",
+            "properties": {
+                "allowAllObjects": {
+                    "type": "boolean",
+                    "xml": {
+                        "name": "allowAllObjects",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkTag"
+                    }
+                },
+                "roleName": {
+                    "type": "string",
+                    "xml": {
+                        "name": "roleName",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "traversalSpecInstances": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TraversalSpecInstance"
+                    }
+                }
+            },
+            "title": "RolePermission"
+        },
+        "RootFS": {
+            "type": "object",
+            "properties": {
+                "Layers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Type": {
+                    "type": "string"
+                }
+            },
+            "title": "RootFS"
+        },
+        "Stats": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "timestamps": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "statKey": {
+                    "$ref": "#/definitions/StatKey"
+                },
+                "intervalUnit": {
+                    "$ref": "#/definitions/IntervalUnit"
+                }
+            }
+        },
+        "StatsOfResource": {
+            "type": "object",
+            "properties": {
+                "resourceId": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "stat-list": {
+                    "$ref": "#/definitions/StatList"
+                }
+            }
+        },
+        "StatsOfResources": {
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StatsOfResource"
+                    }
+                }
+            }
+        },
+        "StatList": {
+            "type": "object",
+            "properties": {
+                "stat": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Stats"
+                    }
+                }
+            }
+        },
+        "StatKey": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                }
+            }
+        },
+        "StatKeys": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/StatKey"
+            }
+        },
+        "StatKeysAccessDto": {
+            "type": "object",
+            "properties": {
+                "accessEnabled": {
+                    "type": "boolean"
+                },
+                "statKeyName": {
+                    "type": "string"
+                }
+            },
+            "title": "StatKeysAccessDto"
+        },
+        "StatQuery": {
+            "type": "object",
+            "properties": {
+                "begin": {
+                    "type": "integer"
+                },
+                "end": {
+                    "type": "integer"
+                },
+                "metrics": {
+                    "type": "boolean"
+                },
+                "resourceId": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "statKey": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "TagBasedMetering": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "xml": {
+                        "name": "key",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "metering": {
+                    "xml": {
+                        "name": "metering",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "$ref": "#/definitions/Metering"
+                },
+                "value": {
+                    "type": "string",
+                    "xml": {
+                        "name": "value",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "TagBasedMetering"
+        },
+        "TagBasedMeteringItem": {
+            "type": "object",
+            "properties": {
+                "itemName": {
+                    "type": "string",
+                    "xml": {
+                        "name": "itemName",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "meterings": {
+                    "type": "array",
+                    "xml": {
+                        "name": "meterings",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "items": {
+                        "$ref": "#/definitions/TagBasedMetering"
+                    }
+                }
+            },
+            "title": "TagBasedMeteringItem"
+        },
+        "TmpfsOptions": {
+            "type": "object",
+            "properties": {
+                "Mode": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "SizeBytes": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "TmpfsOptions"
+        },
+        "TraversalSpec": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "rootAdapterKindKey": {
+                    "type": "string"
+                },
+                "rootResourceKindKey": {
+                    "type": "string"
+                },
+                "adapterInstanceAssociation": {
+                    "type": "boolean"
+                }
+            },
+            "title": "TraversalSpec"
+        },
+        "TraversalSpecInstance": {
+            "type": "object",
+            "properties": {
+                "adapterKind": {
+                    "type": "string",
+                    "xml": {
+                        "name": "adapterKind",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "includedAdapterKinds": {
+                    "type": "array",
+                    "xml": {
+                        "name": "includedAdapterKinds",
+                        "attribute": false,
+                        "wrapped": true
+                    },
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "xml": {
+                        "name": "name",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "resourceKind": {
+                    "type": "string",
+                    "xml": {
+                        "name": "resourceKind",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "resourceSelections": {
+                    "type": "array",
+                    "xml": {
+                        "name": "resourceSelection",
+                        "attribute": false,
+                        "wrapped": false
+                    },
+                    "items": {
+                        "$ref": "#/definitions/ResourceSelection"
+                    }
+                },
+                "selectAllResources": {
+                    "type": "boolean",
+                    "xml": {
+                        "name": "selectAllResources",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "TraversalSpecInstance"
+        },
+        "URI": {
+            "type": "object",
+            "properties": {
+                "absolute": {
+                    "type": "boolean"
+                },
+                "authority": {
+                    "type": "string"
+                },
+                "fragment": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "opaque": {
+                    "type": "boolean"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "query": {
+                    "type": "string"
+                },
+                "rawAuthority": {
+                    "type": "string"
+                },
+                "rawFragment": {
+                    "type": "string"
+                },
+                "rawPath": {
+                    "type": "string"
+                },
+                "rawQuery": {
+                    "type": "string"
+                },
+                "rawSchemeSpecificPart": {
+                    "type": "string"
+                },
+                "rawUserInfo": {
+                    "type": "string"
+                },
+                "scheme": {
+                    "type": "string"
+                },
+                "schemeSpecificPart": {
+                    "type": "string"
+                },
+                "userInfo": {
+                    "type": "string"
+                }
+            },
+            "title": "URI"
+        },
+        "URL": {
+            "type": "object",
+            "properties": {
+                "authority": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "object"
+                },
+                "defaultPort": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "file": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "protocol": {
+                    "type": "string"
+                },
+                "query": {
+                    "type": "string"
+                },
+                "ref": {
+                    "type": "string"
+                },
+                "userInfo": {
+                    "type": "string"
+                }
+            },
+            "title": "URL"
+        },
+        "URLStreamHandler": {
+            "type": "object",
+            "title": "URLStreamHandler"
+        },
+        "Ulimit": {
+            "type": "object",
+            "properties": {
+                "Hard": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "Soft": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "title": "Ulimit"
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "distinguishedName": {
+                    "type": "string",
+                    "xml": {
+                        "name": "distinguishedName",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "emailAddress": {
+                    "type": "string",
+                    "xml": {
+                        "name": "emailAddress",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "xml": {
+                        "name": "enabled",
+                        "attribute": true,
+                        "wrapped": false
+                    }
+                },
+                "firstName": {
+                    "type": "string",
+                    "xml": {
+                        "name": "firstName",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "groupIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "xml": {
+                        "name": "id",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "lastName": {
+                    "type": "string",
+                    "xml": {
+                        "name": "lastName",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkTag"
+                    }
+                },
+                "password": {
+                    "type": "string",
+                    "xml": {
+                        "name": "password",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                },
+                "roleNames": {
+                    "type": "array",
+                    "xml": {
+                        "name": "roleNames",
+                        "attribute": false,
+                        "wrapped": true
+                    },
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "rolePermissions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RolePermission"
+                    }
+                },
+                "username": {
+                    "type": "string",
+                    "xml": {
+                        "name": "username",
+                        "attribute": false,
+                        "wrapped": false
+                    }
+                }
+            },
+            "title": "User"
+        },
+        "UserDto": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "title": "UserDto"
+        },
+        "VCloudDirectorEndpoint": {
+            "type": "object",
+            "properties": {
+                "hostname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "title": "VCloudDirectorEndpoint"
+        },
+        "Volume": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string"
+                }
+            },
+            "title": "Volume"
+        },
+        "VolumeBind": {
+            "type": "object",
+            "properties": {
+                "containerPath": {
+                    "type": "string"
+                },
+                "hostPath": {
+                    "type": "string"
+                }
+            },
+            "title": "VolumeBind"
+        },
+        "VolumeBinds": {
+            "type": "object",
+            "properties": {
+                "binds": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/VolumeBind"
+                    }
+                }
+            },
+            "title": "VolumeBinds"
+        },
+        "VolumeOptions": {
+            "type": "object",
+            "properties": {
+                "DriverConfig": {
+                    "$ref": "#/definitions/Driver"
+                },
+                "Labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "NoCopy": {
+                    "type": "boolean"
+                }
+            },
+            "title": "VolumeOptions"
+        },
+        "VolumeRW": {
+            "type": "object",
+            "properties": {
+                "accessMode": {
+                    "type": "string",
+                    "enum": [
+                        "rw",
+                        "ro"
+                    ]
+                },
+                "volume": {
+                    "$ref": "#/definitions/Volume"
+                }
+            },
+            "title": "VolumeRW"
+        },
+        "VolumesFrom": {
+            "type": "object",
+            "properties": {
+                "accessMode": {
+                    "type": "string",
+                    "enum": [
+                        "rw",
+                        "ro"
+                    ]
+                },
+                "container": {
+                    "type": "string"
+                }
+            },
+            "title": "VolumesFrom"
+        },
+        "VolumesRW": {
+            "type": "object",
+            "properties": {
+                "volumesRW": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/VolumeRW"
+                    }
+                }
+            },
+            "title": "VolumesRW"
+        }
+    }
+}
